@@ -1,8 +1,12 @@
+import 'package:bloc_demo/rxdart/blocs/application_bloc.dart';
+import 'package:bloc_demo/rxdart/blocs/count_bloc.dart';
+
 /**
  * 切换注释查看single_global_instance / scoped模式的BLoC demo
  * 有两个地方需要切换，一个是导入的top_page要切换，另外一个是MyApp要切换
  */
 import 'package:flutter/material.dart';
+
 //单例
 //import 'package:bloc_demo/single_global_instance/top_page.dart';
 //scoped
@@ -12,24 +16,28 @@ import 'package:flutter/material.dart';
 import 'package:bloc_demo/rxdart/blocs/bloc_provider.dart';
 import 'package:bloc_demo/rxdart/top_page.dart';
 
-
-void main() => runApp(MyApp());
+Future<void> main() async {
+  return runApp(BlocProvider<ApplicationBloc>(
+    bloc: ApplicationBloc(),
+    child: BlocProvider(child: MyApp(), bloc: CountBLoC()),
+  ));
+}
 
 /**
  * scoped 入口
  */
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      child: MaterialApp(
-        title: 'scoped',
-        theme: ThemeData.dark(),
-        home: TopPage(),
-      ),
-    );
-  }
-}
+//class MyApp extends StatelessWidget {
+//  @override
+//  Widget build(BuildContext context) {
+//    return BlocProvider(
+//      child: MaterialApp(
+//        title: 'scoped',
+//        theme: ThemeData.dark(),
+//        home: TopPage(),
+//      ),
+//    );
+//  }
+//}
 
 /**
  * single_global_instance 入口
@@ -48,15 +56,13 @@ class MyApp extends StatelessWidget {
 /**
  * rxdart 入口
  */
-//class MyApp extends StatelessWidget {
-//  @override
-//  Widget build(BuildContext context) {
-//    return BlocProvider(
-//      child: MaterialApp(
-//        title: 'rxdart',
-//        theme: ThemeData.dark(),
-//        home: TopPage(),
-//      ),
-//    );
-//  }
-//}
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'rxdart',
+      theme: ThemeData.dark(),
+      home: TopPage(),
+    );
+  }
+}

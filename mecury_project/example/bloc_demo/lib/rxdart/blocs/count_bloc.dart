@@ -1,7 +1,8 @@
+import 'package:bloc_demo/rxdart/blocs/bloc_provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 
-class CountBLoC {
+class CountBLoC implements BlocBase{
   int _count = 0;
   var _subject = BehaviorSubject<int>();
 
